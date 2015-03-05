@@ -1,0 +1,130 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml" >
+	<head>
+		<title>Converter</title>
+		<script>
+function strip(html) {
+    var tempDiv = document.createElement("DIV");
+    tempDiv.innerHTML = html;
+	//tempDiv.innerHTML.replace("\n", "<br/>");
+
+    return tempDiv.innerText;
+}
+
+function handlepaste (elem, e) {
+    var savedcontent = elem.innerText;
+    if (e && e.clipboardData && e.clipboardData.getData) {// Webkit - get data from clipboard, put into editdiv, cleanup, then cancel event
+//          if (window.clipboardData && window.clipboardData.getData) { // IE
+//    elem.innerText  = window.clipboardData.getData('Text');
+//  } else if (e.clipboardData && e.clipboardData.getData) {
+//    e.innerText  = e.clipboardData.getData('text/plain');
+//  }
+		if (/text\/html/.test(e.clipboardData.types)) {
+            elem.innerText = e.clipboardData.getData('Text');
+        }
+        else if (/text\/plain/.test(e.clipboardData.types)) {
+            elem.innerText = e.clipboardData.getData('text/plain');
+        }
+        else {
+            elem.innerText = "";
+        }
+        waitforpastedata(elem, savedcontent);
+        if (e.preventDefault) {
+                e.stopPropagation();
+                e.preventDefault();
+        }
+        return false;
+    }
+    else {// Everything else - empty editdiv and allow browser to paste content into it, then cleanup
+        elem.innerText = "";
+        waitforpastedata(elem, savedcontent);
+        return true;
+    }
+}
+
+function waitforpastedata (elem, savedcontent) {
+    if (elem.childNodes && elem.childNodes.length > 0) {
+        processpaste(elem, savedcontent);
+    }
+    else {
+        that = {
+            e: elem,
+            s: savedcontent
+        }
+        that.callself = function () {
+            waitforpastedata(that.e, that.s)
+        }
+        setTimeout(that.callself,20);
+    }
+}
+function setTableinnerText(table, html) {
+	if(navigator && navigator.userAgent.match(/msie/i)){
+		var temp = table.ownerDocument.createElement('div');
+		temp.innerText = '<table><tbody>' + html + '</tbody></table>';
+		if(table.tBodies.length == 0){
+		var tbody=document.createElement("tbody");
+		table.appendChild(tbody);
+		}
+		table.replaceChild(temp.firstChild.firstChild, table.tBodies[0]);
+	} else {
+		table.innerText=html;
+		}
+} 
+function processpaste (elem, savedcontent) {
+   // pasteddata = elem.innerText;
+    //^^Alternatively loop through dom (elem.childNodes or elem.getElementsByTagName) here
+//alert(pasteddata);
+ //   elem.innerText = savedcontent;
+
+    // Do whatever with gathered data;
+    var regex = /mpflag.*?(?=(mpflag|otherflag))/gm;
+    var mp,result;
+    var member="";
+    var s="";
+	s = elem.innerText;
+	s = s.replace(/.*The SAS System.*|[0-9 ]{10}\+.*/g,"");
+	s = s.replace(/\nMPRINT\([A-Z0-9_]+\):/g,"mpflag");
+	s = s.replace(/\nMACROGEN|\nMLOGIC|\nNOTE|\nSYMBOLGEN:|\nWARNING|\nERROR|\n[0-9]+  /g,"otherflag");
+	s = s.replace(/(\r\n|\n|\r)/g,"");
+
+    result = s.match(regex);
+	if (result) {
+		for (var i = 0; i < result.length; i++) {
+        mp = result[i].replace("mpflag","");
+         mp = mp.replace(/;[^;]*$/,"; \r\n<br/>");  
+        member = member + mp ; 
+		}
+ //   w.value=member;  
+	}
+//	var oTable=document.getElementById("div"); 
+//	oTable.innerText=strip(member);
+//		oTable.innerText.replace("&gt;", ">");
+//        oTable.innerText.replace("&lt;", "<");
+//        oTable.innerText.replace("&nbsp;", " ");
+//        oTable.innerText.replace("&amp;", "&");
+//        oTable.innerText.replace("&quot;", "\"");
+//        oTable.innerText.replace("'", "\'");
+//        oTable.innerText.replace("<br/>", "\n");
+// document.body.getElementById('div').value=member;
+	document.body.innerText=strip(member);
+    
+} 
+
+window.onload = function() {
+	document.getElementById("div").focus();
+};
+
+</script>
+	</head>
+	<body>
+		<h1 style="color:green">Mprint SAS Code Extractor</h1>
+		<p>by zzzzqqq@gmail.com</p>
+		<p>Revision 1.4  2014/09/11</p>
+		<p>&nbsp;&nbsp;Minor bug fixed.</p>
+		<p>Revision 1.3  2014/04/19</p>
+		<p>&nbsp;&nbsp;1. Performance improved.</p>
+   		<p>&nbsp;&nbsp;2. Process simplified.</p>
+<div id='div' contenteditable='true' onpaste='handlepaste(this, event)' STYLE="width:500px;border-style:dotted;border-width:5pt;border-color: green;margin:10 auto"><p>Paste your log here, then executive code will show.</p> <p>p.s. be sure to turn MPRINT option on.</p></div>
+
+	</body>
+	
+</html>
