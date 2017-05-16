@@ -11,7 +11,7 @@ function processpaste (elem, savedcontent) {
     var s="";
 	s = elem.innerText;
 	s = s.replace(/.*The SAS System.*|[0-9 ]{10}\+.*/g,"");
-	s = s.replace(/\nMPRINT\([A-Z0-9_]+\):/g,"mpflag");
+	s = s.replace(/\nMPRINT\([A-Z0-9_\.]+\):/g,"mpflag");
 	s = s.replace(/\nMACROGEN|\nMLOGIC|\nNOTE|\nSYMBOLGEN:|\nWARNING|\nERROR|\n[0-9]+  /g,"otherflag");
 	s = s.replace(/(\r\n|\n|\r)/g,"");
 
