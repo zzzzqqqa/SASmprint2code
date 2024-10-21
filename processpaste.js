@@ -17,4 +17,13 @@ function processpaste (elem, savedcontent) {
 		}
 	}
 	document.body.innerText=strip(member);
+    return member;
 } 
+
+function saveToFile(textToSave) {
+    var blob = new Blob([textToSave], { type: "text/plain;charset=utf-8" });
+    var link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "extracted_code.txt";
+    link.click();
+}

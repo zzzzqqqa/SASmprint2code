@@ -71,6 +71,15 @@ function setTableinnerText(table, html) {
 		}
 } 
 
+function saveToFile() {
+    var textToSave = document.body.innerText;
+    var blob = new Blob([textToSave], { type: "text/plain;charset=utf-8" });
+    var link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "extracted_code.txt";
+    link.click();
+}
+
 window.onload = function() {
 	document.getElementById("div").focus();
 };
@@ -81,7 +90,7 @@ window.onload = function() {
 		<h1 style="color:green">Mprint SAS Code Extractor</h1>
 		<p>by zzzzqqq@gmail.com</p>
 <div id='div' contenteditable='true' onpaste='handlepaste(this, event)' STYLE="width:500px;border-style:dotted;border-width:5pt;border-color: green;margin:10 auto"><p>Paste your log here, then executive code will show.</p> <p>p.s. be sure to turn MPRINT option on.</p></div>
-
+<button onclick="saveToFile()">Save</button>
 	</body>
 	
 </html>
