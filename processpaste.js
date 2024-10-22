@@ -16,5 +16,28 @@ function processpaste (elem, savedcontent) {
         member = member + mp ; 
 		}
 	}
-	document.body.innerText=strip(member);
+	document.getElementById("code-output").innerText = strip(member);
 } 
+
+document.getElementById("clear-code").addEventListener("click", function() {
+    document.getElementById("code-output").innerText = "";
+});
+
+document.getElementById("copy-code").addEventListener("click", function() {
+    var codeOutput = document.getElementById("code-output");
+    var range = document.createRange();
+    range.selectNode(codeOutput);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();
+});
+
+document.getElementById("save-code").addEventListener("click", function() {
+    var codeOutput = document.getElementById("code-output").innerText;
+    var blob = new Blob([codeOutput], { type: "text/plain;charset=utf-8" });
+    var link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "extracted_code.txt";
+    link.click();
+});
