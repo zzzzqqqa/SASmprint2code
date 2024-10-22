@@ -76,17 +76,34 @@ window.onload = function() {
 };
 
 </script>
+	<style>
+		#div, #code-output {
+			width: 45%;
+			height: 300px;
+			border-style: dotted;
+			border-width: 5pt;
+			border-color: green;
+			margin: 10px auto;
+			overflow-y: scroll;
+			display: inline-block;
+			vertical-align: top;
+		}
+		#buttons {
+			width: 90%;
+			margin: 10px auto;
+			text-align: center;
+		}
+	</style>
 	</head>
 	<body>
 		<h1 style="color:green">Mprint SAS Code Extractor</h1>
 		<p>by zzzzqqq@gmail.com</p>
-<div id='div' contenteditable='true' onpaste='handlepaste(this, event)' STYLE="width:500px;border-style:dotted;border-width:5pt;border-color: green;margin:10 auto"><p>Paste your log here, then executive code will show.</p> <p>p.s. be sure to turn MPRINT option on.</p></div>
-
-<div id="code-output" STYLE="width:500px;border-style:dotted;border-width:5pt;border-color: green;margin:10 auto"></div>
-<button id="clear-code">Clear Code</button>
-<button id="copy-code">Copy Code</button>
-<button id="save-code">Save Code</button>
-
+		<div id='div' contenteditable='true' onpaste='handlepaste(this, event)'><p>Paste your log here, then executive code will show.</p> <p>p.s. be sure to turn MPRINT option on.</p></div>
+		<div id="code-output"></div>
+		<div id="buttons">
+			<button id="clear-code">Clear Code</button>
+			<button id="copy-code">Copy Code</button>
+			<button id="save-code">Save Code</button>
+		</div>
 	</body>
-	
 </html>
