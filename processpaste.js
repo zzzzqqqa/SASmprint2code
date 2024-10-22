@@ -41,3 +41,9 @@ document.getElementById("save-code").addEventListener("click", function() {
     link.download = "extracted_code.txt";
     link.click();
 });
+
+document.getElementById("extract-code").addEventListener("click", function() {
+    var elem = document.getElementById("div");
+    var savedcontent = elem.innerText;
+    processpaste(elem, savedcontent);
+});
