@@ -1,110 +1,166 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml" >
-	<head>
-		<title>Converter</title>
-		<script>
-function strip(html) {
-    var tempDiv = document.createElement("DIV");
-    tempDiv.innerHTML = html;
-	//tempDiv.innerHTML.replace("\n", "<br/>");
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Converter</title>
+    <script>
+        function strip(html) {
+            var tempDiv = document.createElement("DIV");
+            tempDiv.innerHTML = html;
+            return tempDiv.innerText;
+        }
 
-    return tempDiv.innerText;
-}
+        function handlepaste(elem, e) {
+            var savedcontent = elem.innerText;
+            if (e && e.clipboardData && e.clipboardData.getData) {
+                if (/text\/html/.test(e.clipboardData.types)) {
+                    elem.innerText = e.clipboardData.getData('Text');
+                } else if (/text\/plain/.test(e.clipboardData.types)) {
+                    elem.innerText = e.clipboardData.getData('text/plain');
+                } else {
+                    elem.innerText = "";
+                }
+                waitforpastedata(elem, savedcontent);
+                if (e.preventDefault) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+                return false;
+            } else {
+                elem.innerText = "";
+                waitforpastedata(elem, savedcontent);
+                return true;
+            }
+        }
 
-function handlepaste (elem, e) {
-    var savedcontent = elem.innerText;
-    if (e && e.clipboardData && e.clipboardData.getData) {// Webkit - get data from clipboard, put into editdiv, cleanup, then cancel event
-//          if (window.clipboardData && window.clipboardData.getData) { // IE
-//    elem.innerText  = window.clipboardData.getData('Text');
-//  } else if (e.clipboardData && e.clipboardData.getData) {
-//    e.innerText  = e.clipboardData.getData('text/plain');
-//  }
-		if (/text\/html/.test(e.clipboardData.types)) {
-            elem.innerText = e.clipboardData.getData('Text');
+        function waitforpastedata(elem, savedcontent) {
+            if (elem.childNodes && elem.childNodes.length > 0) {
+                processpaste(elem, savedcontent);
+            } else {
+                that = {
+                    e: elem,
+                    s: savedcontent
+                }
+                that.callself = function () {
+                    waitforpastedata(that.e, that.s)
+                }
+                setTimeout(that.callself, 20);
+            }
         }
-        else if (/text\/plain/.test(e.clipboardData.types)) {
-            elem.innerText = e.clipboardData.getData('text/plain');
-        }
-        else {
-            elem.innerText = "";
-        }
-        waitforpastedata(elem, savedcontent);
-        if (e.preventDefault) {
-                e.stopPropagation();
-                e.preventDefault();
-        }
-        return false;
-    }
-    else {// Everything else - empty editdiv and allow browser to paste content into it, then cleanup
-        elem.innerText = "";
-        waitforpastedata(elem, savedcontent);
-        return true;
-    }
-}
 
-function waitforpastedata (elem, savedcontent) {
-    if (elem.childNodes && elem.childNodes.length > 0) {
-        processpaste(elem, savedcontent);
-    }
-    else {
-        that = {
-            e: elem,
-            s: savedcontent
+        function setTableinnerText(table, html) {
+            if (navigator && navigator.userAgent.match(/msie/i)) {
+                var temp = table.ownerDocument.createElement('div');
+                temp.innerText = '<table><tbody>' + html + '</tbody></table>';
+                if (table.tBodies.length == 0) {
+                    var tbody = document.createElement("tbody");
+                    table.appendChild(tbody);
+                }
+                table.replaceChild(temp.firstChild.firstChild, table.tBodies[0]);
+            } else {
+                table.innerText = html;
+            }
         }
-        that.callself = function () {
-            waitforpastedata(that.e, that.s)
+
+        window.onload = function () {
+            document.getElementById("div").focus();
+        };
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
         }
-        setTimeout(that.callself,20);
-    }
-}
-function setTableinnerText(table, html) {
-	if(navigator && navigator.userAgent.match(/msie/i)){
-		var temp = table.ownerDocument.createElement('div');
-		temp.innerText = '<table><tbody>' + html + '</tbody></table>';
-		if(table.tBodies.length == 0){
-		var tbody=document.createElement("tbody");
-		table.appendChild(tbody);
-		}
-		table.replaceChild(temp.firstChild.firstChild, table.tBodies[0]);
-	} else {
-		table.innerText=html;
-		}
-} 
 
-window.onload = function() {
-	document.getElementById("div").focus();
-};
+        #container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+        }
 
-</script>
-	<style>
-		#div, #code-output {
-			width: 45%;
-			height: 300px;
-			border-style: dotted;
-			border-width: 5pt;
-			border-color: green;
-			margin: 10px auto;
-			overflow-y: scroll;
-			display: inline-block;
-			vertical-align: top;
-		}
-		#buttons {
-			width: 90%;
-			margin: 10px auto;
-			text-align: center;
-		}
-	</style>
-	</head>
-	<body>
-		<h1 style="color:green">Mprint SAS Code Extractor</h1>
-		<p>by zzzzqqq@gmail.com</p>
-		<div id='div' contenteditable='true' onpaste='handlepaste(this, event)'><p>Paste your log here, then executive code will show.</p> <p>p.s. be sure to turn MPRINT option on.</p></div>
-		<div id="code-output"></div>
-		<div id="buttons">
-			<button id="clear-code">Clear Code</button>
-			<button id="copy-code">Copy Code</button>
-			<button id="save-code">Save Code</button>
-			<button id="extract-code">Extract Code</button>
-		</div>
-	</body>
+        #input-box, #output-box {
+            width: 45%;
+            height: 300px;
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            overflow-y: scroll;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        #buttons {
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .box-label {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #div {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        #code-output {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mprint SAS Code Extractor</h1>
+    <p style="text-align: center;">by zzzzqqq@gmail.com</p>
+    <div id="container">
+        <div>
+            <div class="box-label">Paste your SAS log here</div>
+            <div id='div' contenteditable='true' onpaste='handlepaste(this, event)'>
+                <p style="color: grey;">Paste your log here, and the executable code will appear below.</p>
+            </div>
+            <div class="box-label">Note: Ensure the MPRINT option is enabled.</div>
+        </div>
+        <div>
+            <div class="box-label">Extracted Code</div>
+            <div id="code-output"></div>
+        </div>
+    </div>
+    <div id="buttons">
+        <button id="clear-code">Clear Code</button>
+        <button id="copy-code">Copy Code</button>
+        <button id="save-code">Save Code</button>
+        <button id="extract-code">Extract Code</button>
+    </div>
     <script src="processpaste.js"></script>
+</body>
 </html>
