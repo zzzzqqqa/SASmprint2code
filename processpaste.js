@@ -20,7 +20,8 @@ function processpaste (elem, savedcontent) {
 } 
 
 document.getElementById("clear-code").addEventListener("click", function() {
-    document.getElementById("code-output").innerText = "";
+    document.getElementById("code-output").innerHTML = '<p style="color: grey;">Extracted code will appear here.</p>';
+    document.getElementById("code-input").innerHTML = '<p style="color: grey;">Paste your log here, and the executable code will appear on the right.</p>';
 });
 
 document.getElementById("copy-code").addEventListener("click", function() {

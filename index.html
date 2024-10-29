@@ -130,7 +130,7 @@
             background-color: #45a049;
         }
 
-        #div {
+        #code-input {
             border: 1px solid #ccc;
             padding: 20px; /* Increased padding */
             border-radius: 5px;
@@ -153,26 +153,28 @@
     <div>
             <p style="text-align: left; padding: 15px; font-size: 18px; color: #333;">This tool extracts executable SAS code from SAS logs. Simply paste your SAS log into the left box, and the tool will automatically extract and display the executable code on the right. This is particularly useful for debugging and reviewing SAS code.</p>
     </div>
+    <div id="buttons">
+        
+    </div>
     <div id="container">
         <div>
             <div class="box-label">Paste your SAS log here</div>
-            <div id='div' contenteditable='true' onpaste='handlepaste(this, event)'>
+            <button id="clear-code">Clear Code</button>
+        <button id="extract-code">Extract Code</button>
+            <div id='code-input' contenteditable='true' onpaste='handlepaste(this, event)'>
                 <p style="color: grey;">Paste your log here, and the executable code will appear on the right.</p>
             </div>
             <div class="box-label">Note: Ensure the MPRINT option is enabled.</div>
         </div>
         <div>
             <div class="box-label">Extracted Code</div>
-            <div id="code-output">
-                <p style="color: grey;">Executable code will appear here.</p>
-            </div>
-        </div>
-    </div>
-    <div id="buttons">
-        <button id="clear-code">Clear Code</button>
+            
         <button id="copy-code">Copy Code</button>
         <button id="save-code">Save Code</button>
-        <button id="extract-code">Extract Code</button>
+            <div id="code-output">
+                <p style="color: grey;">Extracted code will appear here.</p>
+            </div>
+        </div>
     </div>
     <script src="processpaste.js"></script>
     <div>   
