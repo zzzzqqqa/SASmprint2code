@@ -176,22 +176,17 @@
     <div>   
     <p style="text-align: left; padding: 15px; font-size: 18px; color: #333;">Example: Paste the following SAS log to see the extracted code.</p>
     <pre style="background-color: #fff; padding: 15px; border-radius: 5px; border: 1px solid #ccc; max-width: 90%; margin: 10px auto; overflow-x: auto; font-size: 18px; white-space: pre-wrap;">
-    1246 options mprint mlogic;
-    1247 %test(10, test);
-    MLOGIC(TEST): Beginning execution.
-    MLOGIC(TEST): Parameter NUM has value 10
-    MLOGIC(TEST): Parameter DATA has value test
-    MPRINT(TEST): data test;
-    MPRINT(TEST): do i = 1 to 10;
-    MPRINT(TEST): x = ranuni(-1);
-    MPRINT(TEST): output;
-    MPRINT(TEST): end;
-    MPRINT(TEST): run;
-    MPRINT(TEST): proc means data = test;
-    MPRINT(TEST): var x;
-    MPRINT(TEST): run;
-    MLOGIC(TEST): Ending execution.
-    </pre>
+1247 %test(10, test);
+MLOGIC(TEST): Beginning execution.
+MLOGIC(TEST): Parameter NUM has value 10
+MLOGIC(TEST): Parameter DATA has value test
+MPRINT(TEST): data test;
+MPRINT(TEST): do i = 1 to 10;
+MPRINT(TEST): x = ranuni(-1);
+MPRINT(TEST): output;
+MPRINT(TEST): end;
+MPRINT(TEST): run;
+MLOGIC(TEST): Ending execution.</pre>
     </div>
     <footer style="margin-top: 20px; padding: 20px; background-color: #f4f4f9; border-top: 1px solid #ccc;">
         <p style="text-align: center; font-size: 18px;">For more information, visit the GitHub repository: <a href="https://github.com/zzzzqqqa/SASmprint2code">SASmprint2code</a></p>
