@@ -81,16 +81,15 @@
         }
 
         #input-box, #output-box {
-            width: 45%;
             height: 300px;
             border: 1px solid #ccc;
-            margin: 10px;
             padding: 20px; /* Increased padding */
             overflow-y: scroll;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
             font-size: 18px; /* Increased font size */
+            margin: 0 auto; 
         }
 
         #buttons {
@@ -158,7 +157,7 @@
             <div class="box-label" style="text-align: left;">Paste your SAS log here</div>
             <button id="clear-code" title="Clear the input and output boxes">Clear Code</button>
             <button id="extract-code" title="Extract executable code from the SAS log">Extract Code</button>
-            <div id='code-input' contenteditable='true' onpaste='handlepaste(this, event)'>
+            <div id='code-input' style='max-width:800px' contenteditable='true' onpaste='handlepaste(this, event)'>
                 <p style="color: grey;">Paste your log here, and the executable code will appear on the right.</p>
             </div>
             <div class="box-label" style="text-align: left;">Note: Ensure the MPRINT option is enabled.</div>
@@ -167,7 +166,7 @@
             <div class="box-label" style="text-align: left;">Extracted Code</div>
             <button id="copy-code" title="Copy the extracted code to the clipboard">Copy Code</button>
             <button id="save-code" title="Save the extracted code to a file">Save Code</button>
-            <div id="code-output">
+            <div id="code-output" style='max-width:1100px'>
                 <p style="color: grey;">Extracted code will appear here.</p>
             </div>
         </div>
