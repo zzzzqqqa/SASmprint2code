@@ -80,7 +80,7 @@
         }
 
         #input-box, #output-box {
-            width: 50%;
+            width: 45%;
             height: 300px;
             border: 1px solid #ccc;
             margin: 10px;
@@ -142,6 +142,9 @@
 <body>
     <h1>Mprint SAS Code Extractor</h1>
     <p style="text-align: center;">by <a href="https://github.com/zzzzqqqa">Chengeng Tian</a></p>
+    <div>
+            <p style="text-align: left; padding: 15px; font-size: 14px; color: #333;">This tool extracts executable SAS code from SAS logs. Simply paste your SAS log into the left box, and the tool will automatically extract and display the executable code on the right. This is particularly useful for debugging and reviewing SAS code.</p>
+    </div>
     <div id="container">
         <div>
             <div class="box-label">Paste your SAS log here</div>
@@ -149,28 +152,12 @@
                 <p style="color: grey;">Paste your log here, and the executable code will appear on the right.</p>
             </div>
             <div class="box-label">Note: Ensure the MPRINT option is enabled.</div>
-            <div class="box-label">Example:</div>
-            <div id="example-log" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; background-color: #f9f9f9;">
-                <p style="color: grey;">1246 options mprint mlogic;
-1247 %test(10, test);
-MLOGIC(TEST): Beginning execution.
-MLOGIC(TEST): Parameter NUM has value 10
-MLOGIC(TEST): Parameter DATA has value test
-MPRINT(TEST): data test;
-MPRINT(TEST): do i = 1 to 10;
-MPRINT(TEST): x = ranuni(-1);
-MPRINT(TEST): output;
-MPRINT(TEST): end;
-MPRINT(TEST): run;
-MPRINT(TEST): proc means data = test;
-MPRINT(TEST): var x;
-MPRINT(TEST): run;
-MLOGIC(TEST): Ending execution.</p>
-            </div>
         </div>
         <div>
             <div class="box-label">Extracted Code</div>
-            <div id="code-output"></div>
+            <div id="code-output">
+                <p style="color: grey;">Executable code will appear here.</p>
+            </div>
         </div>
     </div>
     <div id="buttons">
@@ -180,7 +167,28 @@ MLOGIC(TEST): Ending execution.</p>
         <button id="extract-code">Extract Code</button>
     </div>
     <script src="processpaste.js"></script>
-    <footer>
+    <div>   
+    <p style="text-align: left; padding: 15px; font-size: 14px; color: #333;">Example: Paste the following SAS log to see the extracted code.</p>
+    <pre style="background-color: #fff; padding: 15px; border-radius: 5px; border: 1px solid #ccc; max-width: 90%; margin: 10px auto; overflow-x: auto; font-size: 14px; white-space: pre-wrap;">
+    1246 options mprint mlogic;
+    1247 %test(10, test);
+    MLOGIC(TEST): Beginning execution.
+    MLOGIC(TEST): Parameter NUM has value 10
+    MLOGIC(TEST): Parameter DATA has value test
+    MPRINT(TEST): data test;
+    MPRINT(TEST): do i = 1 to 10;
+    MPRINT(TEST): x = ranuni(-1);
+    MPRINT(TEST): output;
+    MPRINT(TEST): end;
+    MPRINT(TEST): run;
+    MPRINT(TEST): proc means data = test;
+    MPRINT(TEST): var x;
+    MPRINT(TEST): run;
+    MLOGIC(TEST): Ending execution.
+    </pre>
+    </div>
+    <footer style="margin-top: 20px; padding: 20px; background-color: #f4f4f9; border-top: 1px solid #ccc;">
+
         <p style="text-align: center;">For more information, visit the GitHub repository: <a href="https://github.com/zzzzqqqa/SASmprint2code">SASmprint2code</a></p>
     </footer>
 </body>
