@@ -71,6 +71,7 @@
             background-color: #f4f4f9;
             margin: 0;
             padding: 0;
+            font-size: 18px; /* Increased font size */
         }
 
         #container {
@@ -84,11 +85,12 @@
             height: 300px;
             border: 1px solid #ccc;
             margin: 10px;
-            padding: 10px;
+            padding: 20px; /* Increased padding */
             overflow-y: scroll;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
+            font-size: 18px; /* Increased font size */
         }
 
         #buttons {
@@ -101,23 +103,27 @@
             color: #333;
             text-align: center;
             margin-top: 20px;
+            padding: 10px; /* Added padding */
+            font-size: 24px; /* Increased font size */
         }
 
         .box-label {
             text-align: center;
             font-weight: bold;
             margin-bottom: 5px;
+            padding: 10px; /* Added padding */
+            font-size: 18px; /* Increased font size */
         }
 
         button {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
-            margin: 5px;
+            padding: 15px 25px; /* Increased padding */
+            margin: 10px; /* Increased margin */
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px; /* Increased font size */
         }
 
         button:hover {
@@ -126,24 +132,26 @@
 
         #div {
             border: 1px solid #ccc;
-            padding: 10px;
+            padding: 20px; /* Increased padding */
             border-radius: 5px;
             background-color: #f9f9f9;
+            font-size: 18px; /* Increased font size */
         }
 
         #code-output {
             border: 1px solid #ccc;
-            padding: 10px;
+            padding: 20px; /* Increased padding */
             border-radius: 5px;
             background-color: #f9f9f9;
+            font-size: 18px; /* Increased font size */
         }
     </style>
 </head>
 <body>
     <h1>Mprint SAS Code Extractor</h1>
-    <p style="text-align: center;">by <a href="https://github.com/zzzzqqqa">Chengeng Tian</a></p>
+    <p style="text-align: center; padding: 10px;">by <a href="https://github.com/zzzzqqqa">Chengeng Tian</a></p>
     <div>
-            <p style="text-align: left; padding: 15px; font-size: 14px; color: #333;">This tool extracts executable SAS code from SAS logs. Simply paste your SAS log into the left box, and the tool will automatically extract and display the executable code on the right. This is particularly useful for debugging and reviewing SAS code.</p>
+            <p style="text-align: left; padding: 15px; font-size: 18px; color: #333;">This tool extracts executable SAS code from SAS logs. Simply paste your SAS log into the left box, and the tool will automatically extract and display the executable code on the right. This is particularly useful for debugging and reviewing SAS code.</p>
     </div>
     <div id="container">
         <div>
@@ -168,8 +176,8 @@
     </div>
     <script src="processpaste.js"></script>
     <div>   
-    <p style="text-align: left; padding: 15px; font-size: 14px; color: #333;">Example: Paste the following SAS log to see the extracted code.</p>
-    <pre style="background-color: #fff; padding: 15px; border-radius: 5px; border: 1px solid #ccc; max-width: 90%; margin: 10px auto; overflow-x: auto; font-size: 14px; white-space: pre-wrap;">
+    <p style="text-align: left; padding: 15px; font-size: 18px; color: #333;">Example: Paste the following SAS log to see the extracted code.</p>
+    <pre style="background-color: #fff; padding: 15px; border-radius: 5px; border: 1px solid #ccc; max-width: 90%; margin: 10px auto; overflow-x: auto; font-size: 18px; white-space: pre-wrap;">
     1246 options mprint mlogic;
     1247 %test(10, test);
     MLOGIC(TEST): Beginning execution.
@@ -188,8 +196,7 @@
     </pre>
     </div>
     <footer style="margin-top: 20px; padding: 20px; background-color: #f4f4f9; border-top: 1px solid #ccc;">
-
-        <p style="text-align: center;">For more information, visit the GitHub repository: <a href="https://github.com/zzzzqqqa/SASmprint2code">SASmprint2code</a></p>
+        <p style="text-align: center; font-size: 18px;">For more information, visit the GitHub repository: <a href="https://github.com/zzzzqqqa/SASmprint2code">SASmprint2code</a></p>
     </footer>
 </body>
 </html>
