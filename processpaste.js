@@ -4,23 +4,27 @@ function processpaste (elem, savedcontent) {
     var member="";
     var s="";
 	s = elem.innerText;
+    // Extract the text content from the element
+    // add a new line to the text
+    s = "\n" + s;
 	s = s.replace(/.*The SAS System.*|[0-9 ]{10}\+.*/g,"");
 	s = s.replace(/\nMPRINT\([A-Z0-9_\.]+\):/g,"mpflag");
-	s = s.replace(/\nMACROGEN|\nMLOGIC|\nNOTE|\nSYMBOLGEN:|\nWARNING|\nERROR|\n[0-9]+ \+/g,"otherflag");
+	s = s.replace(/\nMACROGEN|\nMLOGIC|\nNOTE|\nSYMBOLGEN:|\nWARNING|\nERROR|\n[0-9]+ *!+\+/g,"otherflag");
 	s = s.replace(/(\r\n|\n|\r)/g," ");
     result = s.match(regex);
-	if (result) {
-		for (var i = 0; i < result.length; i++) {
-        mp = result[i].replace("mpflag","");
-         mp = mp.replace(/;.*$/,"; \r\n<br/>");  
-        member = member + mp ; 
-		}
-	}
+    if (result) {
+        for (var i = 0; i < result.length; i++) {
+            mp = result[i].replace("mpflag","");
+            mp = mp.replace(/;[^;]*$/,"; \r\n<br/>");  
+            member = member + mp; 
+        }
+    }
 	document.getElementById("code-output").innerText = strip(member);
 } 
 
 document.getElementById("clear-code").addEventListener("click", function() {
-    document.getElementById("code-output").innerText = "";
+    document.getElementById("code-output").innerHTML = '<p style="color: grey;">Extracted code will appear here.</p>';
+    document.getElementById("code-input").innerHTML = '<p style="color: grey;">Paste your log here, and the executable code will appear on the right.</p>';
 });
 
 document.getElementById("copy-code").addEventListener("click", function() {
