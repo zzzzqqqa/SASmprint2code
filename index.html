@@ -80,7 +80,7 @@
         }
 
         #input-box, #output-box {
-            width: 45%;
+            width: 50%;
             height: 300px;
             border: 1px solid #ccc;
             margin: 10px;
@@ -146,9 +146,27 @@
         <div>
             <div class="box-label">Paste your SAS log here</div>
             <div id='div' contenteditable='true' onpaste='handlepaste(this, event)'>
-                <p style="color: grey;">Paste your log here, and the executable code will appear below.</p>
+                <p style="color: grey;">Paste your log here, and the executable code will appear on the right.</p>
             </div>
             <div class="box-label">Note: Ensure the MPRINT option is enabled.</div>
+            <div class="box-label">Example:</div>
+            <div id="example-log" style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; background-color: #f9f9f9;">
+                <p style="color: grey;">1246 options mprint mlogic;
+1247 %test(10, test);
+MLOGIC(TEST): Beginning execution.
+MLOGIC(TEST): Parameter NUM has value 10
+MLOGIC(TEST): Parameter DATA has value test
+MPRINT(TEST): data test;
+MPRINT(TEST): do i = 1 to 10;
+MPRINT(TEST): x = ranuni(-1);
+MPRINT(TEST): output;
+MPRINT(TEST): end;
+MPRINT(TEST): run;
+MPRINT(TEST): proc means data = test;
+MPRINT(TEST): var x;
+MPRINT(TEST): run;
+MLOGIC(TEST): Ending execution.</p>
+            </div>
         </div>
         <div>
             <div class="box-label">Extracted Code</div>
