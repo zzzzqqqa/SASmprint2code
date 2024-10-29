@@ -9,7 +9,8 @@ function processpaste (elem, savedcontent) {
     s = "\n" + s;
 	s = s.replace(/.*The SAS System.*|[0-9 ]{10}\+.*/g,"");
 	s = s.replace(/\nMPRINT\([A-Z0-9_\.]+\):/g,"mpflag");
-	s = s.replace(/\nMACROGEN|\nMLOGIC|\nNOTE|\nSYMBOLGEN:|\nWARNING|\nERROR|\n[0-9]+ *!+\+/g,"otherflag");
+    s = s.replace(/\nMACROGEN|\nMLOGIC|\nNOTE|\nSYMBOLGEN:|\nWARNING|\nERROR|\n[0-9]+ *!+\+/g,"otherflag");
+    s = s.replace(/$/, "otherflag");
 	s = s.replace(/(\r\n|\n|\r)/g," ");
     result = s.match(regex);
     if (result) {
